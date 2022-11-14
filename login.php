@@ -87,12 +87,19 @@ session_start();
 		      exit();
 		      echo "Doctor  Rights";
 		  }
-		  else
+		  else if($data['rights'] == 3 || $data['rights']==4)
 		  {
 		      $_SESSION["userid"] = $data[0];
 		      $_SESSION["rights"] = $data['rights'];
 		      header("Location: http://".$localhost."/homespital/get_client.php");
 		      exit();
+		  }
+		  else{
+			$_SESSION["userid"] = $data[0];
+			$_SESSION["rights"] = $data['rights'];
+			header("Location: http://".$localhost."/homespital/admin_dashboard.php?session_id=".session_id());
+			exit();;
+			var_dump($_SESSION);
 		  }
 		}
 	    }
