@@ -3,10 +3,10 @@
 
 session_start();
 //$localhost = "192.168.254.134"; //Home
-//$localhost = "192.168.1.12"; //Condo
-$localhost = "192.168.1.102"; //Router
+$localhost = "192.168.1.11"; //Condo
+//$localhost = "192.168.1.102"; //Router
 //open the connection
-$sqlConnect = mysqli_connect("localhost","root","password");
+$sqlConnect = mysqli_connect("localhost","root","");
 if(!$sqlConnect) {
  die();
 }
@@ -70,14 +70,14 @@ if(isset($_POST["submit"]) && isset($_POST["EnterClient"]))
 {
     $_SESSION["userid"] = $_POST["submit"];
     $_SESSION["name"] = $data['LastName'];
-    header("Location: http://".$localhost."/thesis/dev-router/home_patient.php"); 					
+    header("Location: http://".$localhost."/homespital/home_patient.php"); 					
     exit();
 }
 
 if(isset($_GET['Logout']))
 {
     session_destroy();
-    header("Location: http://".$localhost."/thesis/dev-router/login.php"); 					
+    header("Location: http://".$localhost."/homespital/login.php"); 					
     exit();
 }
 
@@ -267,7 +267,8 @@ if(isset($_POST['Remove']) && isset($_POST['submit']))
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </body>
 </html>
 

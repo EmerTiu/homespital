@@ -14,7 +14,8 @@ session_start();
     <link rel="stylesheet" href="style.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Home Patient Homespital</title>
 	
@@ -23,10 +24,10 @@ session_start();
 	<!-- PHP script -->
 	<?php
 		//$localhost = "192.168.254.134"; //Home
-        //$localhost = "192.168.1.12"; //Condo
-		$localhost = "192.168.1.102"; //Router
+        $localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
 		//Connecting to mysql 
-		$sqlConnect = mysqli_connect("localhost", "root","password");
+		$sqlConnect = mysqli_connect("localhost", "root","");
 		
 		if(!$sqlConnect){
 		die("Error in accessing the database!". mysqli_error());
@@ -139,14 +140,14 @@ session_start();
 		if(isset($_GET['doctorLogout']))
 		{
 			unset($_SESSION['userid']);
-			header("Location: http://".$localhost."/thesis/dev-router/main_doctor.php");
+			header("Location: http://".$localhost."/homespital/main_doctor.php");
 			exit();
 		}
 
 		if(isset($_GET['userLogout']))
 		{
 			session_destroy();
-			header("Location: http://".$localhost."/thesis/dev-router/login.php");
+			header("Location: http://".$localhost."/homespital/login.php");
 			exit();
 		}
 		//echo $image . "\n 90 \n";
@@ -587,8 +588,10 @@ session_start();
 	</script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="../scripts/jquery.min.js"></script> 	
-	<script src="../scripts/canvasjs.min.js"> </script>
+	<!--<script src="../scripts/jquery.min.js"></script> -->	
+	<!-- <script src="../scripts/canvasjs.min.js"> </script> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   </body>
 </html>
 

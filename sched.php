@@ -6,11 +6,12 @@
 	session_start();
 	$servername = "localhost";
     $username = "root";
-    $password = "password";
+    $password = "";
 	$dbname = "homespital";	
 	//$localhost = "192.168.1.13";
 	//$localhost = "192.168.254.134";
-	$localhost = "192.168.1.102"; //Router
+	$localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
 	
 	var_dump($_POST['Time']);
 
@@ -47,7 +48,7 @@
       $conn->query($sql2);
     }
 	
-	header("Location: http://".$localhost."/thesis/dev-router/home_patient.php"); 
+	header("Location: http://".$localhost."/homespital/home_patient.php"); 
 	$conn->close();
 	
 ?>

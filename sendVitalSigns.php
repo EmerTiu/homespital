@@ -5,7 +5,7 @@ $dbName = "homespital";
 $tableName = "vitals_table";
 $logsTableName = "vitals_table_logs";
 $username = "root";
-$password = "password";
+$password = "";
 
 $apiKeyValue = "y8His941pHq";
 

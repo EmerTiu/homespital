@@ -1,10 +1,10 @@
 <?php
 session_start();
 //$localhost = "192.168.254.134"; //Home
-//$localhost = "192.168.1.13"; //Condo
-$localhost = "192.168.1.102"; //Router
+$localhost = "192.168.1.11"; //Condo
+//$localhost = "192.168.1.102"; //Router
 //Connecting to mysql 
-$sqlConnect = mysqli_connect("localhost", "root","password");
+$sqlConnect = mysqli_connect("localhost", "root","");
 		
 if(!$sqlConnect){
 die("Error in accessing the database!". mysqli_error());
@@ -27,7 +27,7 @@ die("Failed to connect: " . mysqli.error());
 
 $SR = mysqli_fetch_array($getData);
 //echo $SR['ConnectedID'];
-header("Location: http://".$localhost."/thesis/dev-router/home_patient.php"); 
+header("Location: http://".$localhost."/homespital/home_patient.php"); 
 $_SESSION['userid'] = $SR['ConnectedID'];
 exit();
 ?>

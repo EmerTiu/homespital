@@ -2,7 +2,8 @@
         session_start();
         //$localhost = "192.168.254.102"; //Home
         //$localhost = "192.168.1.13"; //Condo
-	$localhost = "192.168.1.102"; //Router
+        $localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
 			$entry = false;
@@ -25,12 +26,12 @@
             if (empty($_POST["firstName"]) || empty($_POST["lastName"]) || empty($_FILES['image']['tmp_name']) || empty($_POST["personalNumber"]) || empty($_POST["countryCode"]) ) 
 			{
                 echo "error";
-				header("Location: http://localhost/thesis/dev-router/register_doctor.html"); 					
+				header("Location: http://".$localhost."/homespital/register_doctor.html"); 					
                 exit();
 			} 
             else
             {
-                $sqlConnect = mysqli_connect("localhost","root","password");
+                $sqlConnect = mysqli_connect("localhost","root","");
                 if(!$sqlConnect) {
                 die();
                 }

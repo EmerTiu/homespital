@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
 <?php
     session_start();
-    $localhost = "192.168.1.102"; 
+    $localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
     
 		
     $registerErr = "";
@@ -42,12 +44,12 @@
 	    $_SESSION["register_email"] = $_POST["email"];
 	    if($_POST["submit"] == 1)
 		{
-		    header("Location: http://".$localhost."/thesis/dev-router/register_patient.html"); 					
+		    header("Location: http://".$localhost."/homespital/register_patient.html"); 					
 		    exit();
 		}
 	    else
 	    {
-		header("Location: http://".$localhost."/thesis/dev-router/register_doctor.html"); 					
+		header("Location: http://".$localhost."/homespital/register_doctor.html"); 					
 		exit();
 	    }
 	}
@@ -62,7 +64,7 @@
 
     <div class="card-container">
       <div class="card login-card">
-        <a class="card-title login-card" href=<?php echo "http://".$localhost."/thesis/dev-router/login.php"; ?> style="text-decoration: none;" >Homespital</a>
+        <a class="card-title login-card" href=<?php echo "http://".$localhost."/homespital/login.php"; ?> style="text-decoration: none;" >Homespital</a>
         <div class="card-body">
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="form-group">

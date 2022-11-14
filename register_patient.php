@@ -2,7 +2,8 @@
         session_start();
         //$localhost = "192.168.254.102"; //Home
         //$localhost = "192.168.1.13"; //Condo
-      $localhost = "192.168.1.102"; //Router
+        $localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
 			$entry = false;
@@ -75,12 +76,12 @@
             || empty($_POST["emergencyPerson1"]) || empty($_POST["emergencyNumber1"]) ) 
 			{
                 echo "error";
-				header("Location: http://".$localhost."/thesis/dev-router/register_patient.html"); 					
+				header("Location: http://".$localhost."/homespital/register_patient.html"); 					
                 exit();
 			} 
             else
             {
-                $sqlConnect = mysqli_connect("localhost","root","password");
+                $sqlConnect = mysqli_connect("localhost","root","");
                 if(!$sqlConnect) {
                 die();
                 }
@@ -93,7 +94,7 @@
                 CreateNewUser($sqlConnect);
                 session_destroy();
                 mysqli_close($sqlConnect);
-                header("Location: http://".$localhost."/thesis/dev-router/login.php"); 					
+                header("Location: http://".$localhost."/homespital/login.php"); 					
                 exit();
                
             }

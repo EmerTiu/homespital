@@ -13,18 +13,20 @@ session_start();
     <link rel="stylesheet" href="style.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Login Homespital</title>
   </head>
 
   <body>
   
 	<?php
-	    $localhost = "192.168.1.102";
+	    $localhost = "192.168.1.11"; //Condo
+		//$localhost = "192.168.1.102"; //Router
 	    $showRegister = 1;
 
 	    //open the connection
-	    $sqlConnect = mysqli_connect("localhost","root","password");
+	    $sqlConnect = mysqli_connect("localhost","root",'');
 	    if(!$sqlConnect) {
 	     die();
 	    }
@@ -73,12 +75,12 @@ session_start();
 		  {
 		      $_SESSION["userid"] = $data[0];
 		      $_SESSION["rights"] = $data['rights'];
-		      header("Location: http://".$localhost."/thesis/dev-router/home_patient.php"); 					
+		      header("Location: http://".$localhost."/homespital/home_patient.php"); 					
 		      exit();
 		  }
 		  else if($data['rights'] == 2)
 		  {
-		      header("Location: http://".$localhost."/thesis/dev-router/main_doctor.php");
+		      header("Location: http://".$localhost."/homespital/main_doctor.php");
 		      $_SESSION["userid"] = $data[0];
 		      $_SESSION["rights"] = $data['rights'];
 		      $_SESSION["doctorid"] = $data[0];
@@ -89,7 +91,7 @@ session_start();
 		  {
 		      $_SESSION["userid"] = $data[0];
 		      $_SESSION["rights"] = $data['rights'];
-		      header("Location: http://".$localhost."/thesis/dev-router/get_client.php");
+		      header("Location: http://".$localhost."/homespital/get_client.php");
 		      exit();
 		  }
 		}
@@ -128,7 +130,7 @@ session_start();
 	    <?php 
 	      if($showRegister==1)
 	      {
-		  echo '<form action="http://'.$localhost.'/thesis/dev-router/register.php";>';
+		  echo '<form action="http://'.$localhost.'/homespital/register.php";>';
 		  echo	'<div class=" button-center">';
 		  echo		'<button type="submit" class="btn btn-login" value="Submit">Register</button>';
 		  echo	'</div>';

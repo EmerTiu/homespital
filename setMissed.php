@@ -2,7 +2,7 @@
  
   $servername = "localhost";
   $username = "root";
-  $password = "password";
+  $password = "";
   $dbname = "homespital";
   $boxID = $_POST['box_id'];
   //$boxID = "A00001";
