@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- My CSS-->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="card-container">
+      <div class="card login-card">
+      <a class="card-title login-card" href="http://192.168.1.102/thesis/dev-router/login.php" style="text-decoration: none;" >Homespital</a>
+        <div class="card-body">
+          <form method="post" action="http://192.168.1.102/thesis/dev-router/register_patient.php" accept-charset="utf-8" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="firstname">First Name </label>
+              <input type="text" class="form-control" id="firstname" name="firstName">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName">
+            </div>
+            <div class="form-group">
+              <label for="middleInitial">MI </label>
+              <input type="text" class="form-control" id="middleInitial"name="middleInitial">
+            </div>
+            <div class="form-group">
+              <label for="birthdate">Birthdate </label>
+              <input type="date" class="form-control" id="birthdate" name="birthdate">
+              </div>
+              <div class="form-group">
+                <label for="image">Profile Image: </label>
+                <input type="file" id="image" name="image" accept="image/png, image/gif, image/jpeg" >
+              </div>
+            <div class="form-group">
+              <label for="gender">Gender: </label>
+              <select name="gender" id="gender">
+                <option value="">-</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+            
+              <label for="bloodtype">Bloodtype: </label>
+              <select name="bloodtype" id="bloodtype">
+                <option value="">-</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="bloodtype">Country Code: </label>
+              <select name="countryCode" id="countryCode">
+                <option value="">-</option>
+                <option value="(+93)">Afghanistan +93</option>
+                <option value="(+55)">Brazil +55</option>
+                <option value="(+251)">Ethiopia +251</option>
+                <option value="(+81)">Japan +81</option>
+                <option value="(+63)">Philippines +63</option>
+                <option value="(+82)">South Korea +82</option>
+                <option value="(+1)">United States +1</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="personalNumber">Contact Number </label>
+              <input type="tel" class="form-control" id="personalNumber" name="personalNumber">
+            </div>
+            <div class="form-group">
+              <label for="address">Home Address</label>
+              <input type="text" class="form-control" id="address" name="address">
+            </div>
+            <div class="form-group">
+              <label for="contactPerson1">Emergency Contact Person 1 </label>
+              <input type="text" class="form-control" id="contactPerson1" name="emergencyPerson1">
+            </div>
+            <div class="form-group">
+              <label for="contactNumber1">Emergency Contact Number 1 </label>
+              <input type="tel" class="form-control" id="contactNumber1" name="emergencyNumber1">
+            </div>
+            <div class="form-group">
+              <label for="contactPerson2">Emergency Contact Person 2 </label>
+              <input type="text" class="form-control" id="contactPerson2" name="emergencyPerson2">
+            </div>
+            <div class="form-group">
+              <label for="contactNumber2">Emergency Contact Number 2 </label>
+              <input type="tel" class="form-control" id="contactNumber2" name="emergencyNumber2">
+            </div>
+            <div class="form-group">
+              <label for="contactPerson3">Emergency Contact Person 3 </label>
+              <input type="text" class="form-control" id="contactPerson3" name="emergencyPerson3">
+            </div>
+            <div class="form-group">
+              <label for="contactNumber3">Emergency Contact Number 3 </label>
+              <input type="tel" class="form-control" id="contactNumber3" name="emergencyNumber3">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputUsername1">Caretaker Username </label>
+              <input type="username" class="form-control" id="InputUsername1" name="caretakerUser">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputUsername1">Caretaker Email</label>
+              <input type="email" class="form-control" id="InputEmail1" name="caretakerEmail">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Caretaker Password </label>
+              <input type="password" class="form-control" id="InputPassword1" name="caretakerPassword">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputUsername1">Guest Username </label>
+              <input type="username" class="form-control" id="InputUsername1" name="guestUser">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputUsername1">Guest Email</label>
+              <input type="email" class="form-control" id="InputEmail1" name="guestEmail">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Guest Password </label>
+              <input type="password" class="form-control" id="InputPassword1" name="guestPassword">
+            </div>
+			<div>
+				<!-- <span class="error"> <?php //echo $registerErr;?></span></td></tr> -->
+			</div>
+			<div>
+				<div class=" button-center">
+				  <button type="submit" class="btn btn-login" value="Submit">Login</button>
+				</div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div><br><br>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

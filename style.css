@@ -1,0 +1,174 @@
+body{
+	background-color: #E8E8E8 !important;
+}
+
+
+.card.home-tab-card
+{
+	border-radius: 0px;
+	padding: 10px;
+	width: 100%;
+	background-color: #505050;
+}
+
+.link-main
+{
+	color:#FFFFFF;
+	text-decoration: none;
+}
+
+.my-custom-scrollbar {
+position: relative;
+align-content:center;
+height: 500px;
+width: 100%;
+background-color:#ffffff;
+
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.center
+{
+	height: 300px; 
+	width: 300px;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+
+.table-responsive{
+
+text-align:center;
+border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  
+}
+
+.my-custom-schedule {
+
+position: relative;
+align-content:center;
+height: 200px;
+background-color:#ffffff;
+
+overflow: auto;
+}
+
+.notice{
+	padding:18px;
+}
+
+.a{
+	color:white;
+	text-align:center;
+	width:300px;
+	height:450px;
+}
+
+.img{
+	color:white;
+	text-align:center;
+	width:100px;
+	height:100px;
+}
+
+.div
+{
+	min-width: 200px;
+	max-width: 900px;
+	margin: auto;
+}
+
+
+.menu.row
+{
+	font-size: 32px;
+	font-weight: bold;
+	color: #ffffff; 
+	
+}
+
+.body.row
+{
+	padding: 18px;
+	position: relative;
+}
+
+.table-condensed
+{
+	text-align:center;
+	font-size: 20px;
+	margin: auto;
+	color:#000000;
+}
+
+.container-title
+{
+	min-width: 200px;
+	max-width: 700px;
+	margin: auto;
+}
+
+
+.table
+{
+	font-size: 24px;
+	color:#000000;
+}
+
+.home-container{
+  display: flex;
+  background-color: #e8e8e8;
+}
+
+
+
+.card-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10%;
+
+}
+.card.login-card
+{
+	padding: 20px;
+	width: 30%;
+	border-radius: 25px;
+}
+
+.card-title.login-card
+{
+	color: #006B4A;
+	text-align: center;
+	margin: 0px;
+	font-size: 32px;
+	font-weight: bold;
+
+}
+
+.button-center
+{
+	text-align: center;
+}
+
+.btn.btn-login
+{
+	margin-top: 15px;
+	width: 50%;
+	padding: 2%;
+	background: #006B4A;
+	color: white;
+	text-align: center;
+	font-size: 18px;
+	border-radius: 15px;
+}
+/*
+gray bg = #E8E8E8
+primary green = #006B4A
+
+*/
