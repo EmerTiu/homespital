@@ -23,7 +23,7 @@
 			// {
 			// 	echo "error 4";
 			// } 
-            if (empty($_POST["firstName"]) || empty($_POST["lastName"]) || empty($_FILES['image']['tmp_name']) || empty($_POST["personalNumber"]) || empty($_POST["countryCode"]) ) 
+            if (empty($_POST["firstName"]) || empty($_POST["lastName"])) 
 			{
                 echo "error";
 				header("Location: http://".$localhost."/homespital/register_doctor.html"); 					
@@ -44,43 +44,51 @@
                 CreateNewUser($sqlConnect);
                 session_destroy();
                 mysqli_close($sqlConnect);
-                header("Location: http://".$localhost."/thesis/dev-router/login.php"); 					
-                exit();
-               
+                echo 
+                    '<script>
+                        alert("Successfully Created Doctor Account!");
+                        location="http://'.$localhost.'/homespital/login.php";
+                    </script>';               
             }
         }
         function CreateNewUser($sqlConnect)
         {
-            $username = $_SESSION["register_username"];
-            $email = $_SESSION["register_email"];
-            $password = $_SESSION["register_password"];
+            $username = $_SESSION["user"];
+            $email = $_POST["email"];
+            $password = $_SESSION["password"];
             $query = "insert into users (Username, Email, Rights, Password) values ('$username', '$email', '2', '$password');";
             $result = mysqli_query($sqlConnect,$query);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());
             }
-
-            $query = "select UserID from users where Username = '$username' AND Email = '$email';";
-            $result = mysqli_query($sqlConnect,$query);
+	    
+            $sql2 = "UPDATE `Web-Sync` SET LastSync = CURRENT_TIMESTAMP WHERE Name='users';";
+            $result = mysqli_query($sqlConnect,$sql2);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());
-            }
-            $array = mysqli_fetch_array($result);	
-            $userID = $array['UserID'];
-            
-            
-            CreateNewDoctor($sqlConnect, $userID); 
+            }  
+
+            CreateNewDoctor($sqlConnect, $username); 
         }
-        function CreateNewDoctor($sqlConnect, $userID)
+        function CreateNewDoctor($sqlConnect, $username)
         {
             $firstname = $_POST['firstName'];
             $lastname = $_POST['lastName'];
             $contactnumber = $_POST['countryCode'] . $_POST['personalNumber'];
-            $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-	    $imageName = $_FILES['image']['name'];
-	    $imageType = $_FILES['image']['type'];
 
-            $query = "insert into doctor_users (UserID, FirstName, LastName, PhoneNumber, ImageName, ImageType, Image) values ('$userID', '$firstname', '$lastname', '$contactnumber', '$imageName', '$imageType', '$image');";
+            $query = "";
+            if($_FILES["image"]['size']==0)
+            {                
+                $query = "INSERT INTO doctor_users (UserID, FirstName, LastName, PhoneNumber, ImageName, ImageType, Image) SELECT users.UserID, '$firstname', '$lastname', '$contactnumber', assets.ImageName, assets.ImageName, assets.Image FROM users, assets WHERE users.Username = '$username' AND assets.ImageName = 'blank.png'";
+            }
+            else
+            {
+                $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+                $imageName = $_FILES['image']['name'];
+                $imageType = $_FILES['image']['type'];
+                $query = "INSERT INTO doctor_users (UserID, FirstName, LastName, PhoneNumber, ImageName, ImageType, Image) SELECT users.UserID, '$firstname', '$lastname', '$contactnumber', '$imageName', '$imageType', '$image' FROM users WHERE users.Username = '$username'";
+            }
+            echo $query;
             $result = mysqli_query($sqlConnect,$query);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());

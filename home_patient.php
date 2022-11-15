@@ -349,17 +349,27 @@ session_start();
 					}
 				?> 
 			</div>
-			<div class="col-sm-4" style="text-align:right; ">
-				<?php 
-					if($Rights==2)
-					{
-						echo '<a href="home_patient.php?doctorLogout=true" style="color:#FFFFFF; text-decoration: none;" >Back</a>';
-					}
-					else
-					{
-						echo '<a href="home_patient.php?userLogout=true" style="color:#FFFFFF; text-decoration: none;" >Logout</a>';	
-					}
-				?>		
+			<div class="col-sm-4 row" style="text-align:right; ">
+				<div class="col-8" style="text-align:right; ">
+					<?php
+						//header("Location: http://".$localhost."/homespital/main_doctor.php");  href="http://"'.$localhost.'"/homespital/view_user.php"
+						if($Rights != 2) echo '<a href="view_user.php"> <img class="center rounded float-right"  src="assets/person-circle.png"  style="height:50px; width:50px"> </img> </a>'
+					?>
+					
+				</div>
+				<div class="col-4" style="text-align:right; ">
+					<?php 
+						if($Rights==2)
+						{
+							echo '<a href="home_patient.php?doctorLogout=true" style="color:#FFFFFF; text-decoration: none;" >Back</a>';
+						}
+						else
+						{
+							echo '<a href="home_patient.php?userLogout=true" style="color:#FFFFFF; text-decoration: none;" >Logout</a>';	
+						}
+					?>	
+				</div>
+					
 			</div>
 		</div>
 	</div>

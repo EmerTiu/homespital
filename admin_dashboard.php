@@ -94,7 +94,7 @@ if(isset($_GET['Logout']))
 			<div style="background-color:#006b4a; border-radius: 5px; font-size: 24px; color:white"> Accounts </div>
 				
 			<!--Accounts table-->
-			<div class = "row-12  d-flex table-wrapper-scroll-y my-custom-schedule col-lg-12" style = "Height: 500px" > 
+			<div class = "row-12  d-flex table-wrapper-scroll-y my-custom-schedule col-lg-12" style = "Height: 700px" > 
 				<table class="table ">
 					<thead>
 					  <tr>

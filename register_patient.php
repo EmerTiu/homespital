@@ -7,73 +7,8 @@
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
 			$entry = false;
-			// if (empty($_POST["firstName"]) ) 
-			// {
-			// 	echo "error 1";
-			// } 
-			// if ( empty($_POST["lastName"])  ) 
-			// {
-			// 	echo "error 2";
-			// } 
-			// if (empty($_POST["middleInitial"]) ) 
-			// {
-			// 	echo "error 3";
-			// } 
-			// if (empty($_POST["birthdate"])) 
-			// {
-			// 	echo "error 4";
-			// } 
-			// if (empty($_POST["gender"])) 
-			// {
-			// 	echo "error 5";
-			// } 
-			// if (empty($_POST["bloodtype"])) 
-			// {
-			// 	echo "error 6";
-			// } 
-			// if ( empty($_FILES['image']['name']) ) 
-			// {
-			// 	echo "error 7";
-			// } 
-			// if (empty($_POST["personalNumber"])) 
-			// {
-			// 	echo "error 8";
-			// } 
-			// if (empty($_POST["address"])) 
-			// {
-			// 	echo "error 9";
-			// } 
-			// if ( empty($_POST["caretakerUser"])) 
-			// {
-			// 	echo "error 10";
-			// } 
-			// if (empty($_POST["caretakerEmail"])) 
-			// {
-			// 	echo "error 11";
-			// } 
-			// if (empty($_POST["caretakerPassword"])) 
-			// {
-			// 	echo "error 12";
-			// } 
-			// if (empty($_POST["guestUser"])) 
-			// {
-			// 	echo "error 13";
-			// } 
-			// if (empty($_POST["guestEmail"])) 
-			// {
-			// 	echo "error 14";
-			// } 
-			// if (empty($_POST["guestPassword"]) ) 
-			// {
-			// 	echo "error 15";
-			// } 
             if (empty($_POST["firstName"]) || empty($_POST["lastName"]) || empty($_POST["middleInitial"]) || 
-            empty($_POST["birthdate"]) || empty($_POST["gender"]) || empty($_POST["bloodtype"])|| 
-            empty($_FILES['image']['name']) || empty($_POST["personalNumber"]) || empty($_POST["address"])||
-            empty($_POST["caretakerUser"]) || empty($_POST["caretakerEmail"]) || empty($_POST["caretakerPassword"])||
-            empty($_POST["guestUser"]) || empty($_POST["guestEmail"]) || empty($_POST["guestPassword"])
-            || empty($_POST["countryCode"]) || empty($_POST["gender"]) 
-            || empty($_POST["emergencyPerson1"]) || empty($_POST["emergencyNumber1"]) ) 
+            empty($_POST["birthdate"]) || empty($_POST["gender"]) || empty($_POST["bloodtype"])) 
 			{
                 echo "error";
 				header("Location: http://".$localhost."/homespital/register_patient.html"); 					
@@ -94,16 +29,18 @@
                 CreateNewUser($sqlConnect);
                 session_destroy();
                 mysqli_close($sqlConnect);
-                header("Location: http://".$localhost."/homespital/login.php"); 					
-                exit();
-               
+                echo 
+                    '<script>
+                        alert("Successfully Created Patient Account!");
+                        location="http://'.$localhost.'/homespital/login.php";
+                    </script>';
             }
         }
         function CreateNewUser($sqlConnect)
         {
-            $username = $_SESSION["register_username"];
-            $email = $_SESSION["register_email"];
-            $password = $_SESSION["register_password"];
+            $username = $_SESSION["user"];
+            $email = $_POST["email"];
+            $password = $_SESSION["password"];
             $query = "insert into users (Username, Email, Rights, Password) values ('$username', '$email', '1', '$password');";
             $result = mysqli_query($sqlConnect,$query);
             if(!$result){
@@ -127,11 +64,12 @@
             
             CreateNewPatient($sqlConnect, $userID);            
             CreateMedicineTable($sqlConnect, $userID);
-            CreateNewCaretaker($sqlConnect, $userID);
-            CreateNewGuest($sqlConnect, $userID);
         }
         function CreateNewPatient($sqlConnect, $userID)
         {
+            $image = $imageName = $imageType = $query = "";
+            $imageArray = array();
+            
             $firstname = $_POST['firstName'];
             $lastname = $_POST['lastName'];
             $mi = $_POST['middleInitial'];
@@ -146,11 +84,22 @@
             $contactName2 = $_POST['emergencyPerson2'];
             $contactNumber3 = $_POST['emergencyNumber3'];
             $contactName3 = $_POST['emergencyPerson3'];
-            $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-	    $imageName = $_FILES['image']['name'];
-	    $imageType = $_FILES['image']['type'];
+
+            $box_id = "A00002";
+            $vitals_id = "B00002";
             
-            $query = "insert into patient_users (UserID, FirstName, LastName, MI, Birthdate, Gender, Bloodtype, ContactNumber, Address, ContactNumber1, ContactName1, ContactNumber2, ContactName2, ContactNumber3, ContactName3, Image) values ('$userID', '$firstname', '$lastname', '$mi', '$birthdate', '$gender', '$bloodtype', '$contactnumber', '$address', '$contactNumber1', '$contactName1', '$contactNumber2', '$contactName2', '$contactNumber3', '$contactName3', '$image');";
+            if($_FILES["image"]['size']==0)
+            {                
+                $query = "INSERT INTO patient_users (UserID, box_id, vitalsDevice_id, FirstName, LastName, MI, Birthdate, Gender, Bloodtype, ContactNumber, Address, ContactNumber1, ContactName1, ContactNumber2, ContactName2, ContactNumber3, ContactName3, ImageName, ImageType, Image) SELECT '$userID', '$box_id', '$vitals_id', '$firstname', '$lastname', '$mi', '$birthdate', '$gender', '$bloodtype', '$contactnumber', '$address', '$contactNumber1', '$contactName1', '$contactNumber2', '$contactName2', '$contactNumber3', '$contactName3', assets.ImageName, assets.ImageName, assets.Image FROM assets WHERE assets.ImageName = 'blank.png'";
+            }
+            else
+            {
+                $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+                $imageName = $_FILES['image']['name'];
+                $imageType = $_FILES['image']['type'];
+                $query = "INSERT INTO patient_users (UserID, box_id, vitalsDevice_id, FirstName, LastName, MI, Birthdate, Gender, Bloodtype, ContactNumber, Address, ContactNumber1, ContactName1, ContactNumber2, ContactName2, ContactNumber3, ContactName3, ImageName, ImageType, Image) VALUES ('$userID', '$box_id', '$vitals_id', '$firstname', '$lastname', '$mi', '$birthdate', '$gender', '$bloodtype', '$contactnumber', '$address', '$contactNumber1', '$contactName1', '$contactNumber2', '$contactName2', '$contactNumber3', '$contactName3', '$imageName', '$imageType', '$image')";
+            }
+
             $result = mysqli_query($sqlConnect,$query);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());
@@ -162,70 +111,7 @@
                 die("Failed to connect: " . mysqli.error());
             }
         }
-        function CreateNewCaretaker($sqlConnect, $userID)
-        {
-            $username = $_POST['caretakerUser'];
-            $email = $_POST['caretakerEmail'];
-            $pass = $_POST['caretakerPassword'];
-            $query = "insert into users ( Username, Email, Rights, Password) values ('$username', '$email', 3, '$pass');";
-            $result = mysqli_query($sqlConnect,$query);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
 
-            $query = "select UserID from users where Username = '$username' AND Email = '$email';";
-            $result = mysqli_query($sqlConnect,$query);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-
-            $array = mysqli_fetch_array($result);	
-            $caretakerID = $array['UserID'];
-
-            $query2 = "insert into caretaker_and_guest_users (UserID, ConnectedID) values ('$caretakerID', '$userID');";
-            $result = mysqli_query($sqlConnect,$query2);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-	    
-	    $sql2 = "UPDATE `Web-Sync` SET LastSync = CURRENT_TIMESTAMP WHERE Name='caretaker_and_guest_users';";
-	    $result = mysqli_query($sqlConnect,$sql2);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-        }
-        function CreateNewGuest($sqlConnect, $userID)
-        {
-            $username = $_POST['guestUser'];
-            $email = $_POST['guestEmail'];
-            $pass = $_POST['guestPassword'];
-            $query = "insert into users (Username, Email, Rights, Password) values ('$username', '$email', 4, '$pass');";
-            $result = mysqli_query($sqlConnect,$query);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-
-            $query = "select UserID from users where Username = '$username' AND Email = '$email';";
-            $result = mysqli_query($sqlConnect,$query);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-
-            $array = mysqli_fetch_array($result);	
-            $guestID = $array['UserID'];
-
-            $query2 = "insert into caretaker_and_guest_users (UserID, ConnectedID) values ('$guestID', '$userID')";
-            $result = mysqli_query($sqlConnect,$query2);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-	    
-	    $sql2 = "UPDATE `Web-Sync` SET LastSync = CURRENT_TIMESTAMP WHERE Name='caretaker_and_guest_users';";
-	    $result = mysqli_query($sqlConnect,$sql2);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-        }	
         function CreateMedicineTable($sqlConnect, $userID)
         {
             $query = "insert into medicine_intake_status (UserID) values ('$userID');";

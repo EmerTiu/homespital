@@ -35,9 +35,16 @@
         if(isset($_POST["submit1"]))
         {
             $image = addslashes(file_get_contents($_FILES['f1']['tmp_name']));
-            //$query = "update doctor_users set image = '$image' where userid = 'f1ef91b4-0585-11ed-970b-7cd30a809727'";
-            //mysqli_query($sqlConnect, $query);
+            $imageName = $_FILES['f1']['name'];
+            $imageType = $_FILES['f1']['type'];
+            $query = "INSERT INTO assets (ImageName, ImageType, Image) VALUES('$imageName', '$imageType', '$image')";
+            mysqli_query($sqlConnect, $query);
             echo $image;
+
+
+            $query2 = "INSERT INTO assets (ImageName, ImageType, Image) SELECT 'duplicate', 'image/png' , assets.Image FROM assets WHERE assets.ImageName = '$imageName'";
+
+            $result2 = mysqli_query($sqlConnect, $query2);
         }
 
         //displaying doctor image

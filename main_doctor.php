@@ -16,6 +16,8 @@ if(!$selectDB) {
  die("Database connection failed!" .mysqli_error());
 }
 
+//echo PHPinfo();
+//var_dump($_SESSION);
 $doctorid = $_SESSION['doctorid'];
 $clientList = array();
 
@@ -160,8 +162,15 @@ if(isset($_POST['Remove']) && isset($_POST['submit']))
 			<div class="col-sm-4" style="text-align:center">Welcome, 
 				<?php echo "Dr. ". $data['LastName']; ?> 
 			</div>
-            <div class="col-sm-4" style="text-align:right; ">
-				<a href="main_doctor.php?Logout=true" style="color:#FFFFFF; text-decoration: none;">Logout</a>	
+            
+            <div class="col-sm-4 row" style="text-align:right; ">
+				<div class="col-8" style="text-align:right; ">
+                    <a href="view_user.php"> <img class="center rounded float-right"  src="assets/person-circle.png"  style="height:50px; width:50px"> </img> </a>
+				</div>
+				<div class="col-sm-4" style="text-align:right; ">
+				    <a href="main_doctor.php?Logout=true" style="color:#FFFFFF; text-decoration: none;">Logout</a>	
+			    </div>
+					
 			</div>
 		</div>
 	</div>
@@ -191,6 +200,7 @@ if(isset($_POST['Remove']) && isset($_POST['submit']))
                 </div>
             </div>
         </div>
+        
         <div class="body row"> </div>
 		<!-- left panel -->
 		<div class="left-body col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-radius: 10px;"> 
