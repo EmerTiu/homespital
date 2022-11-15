@@ -1,9 +1,8 @@
 
 <?php
-session_id($_GET['session_id']);
 session_start();
 //$localhost = "192.168.254.134"; //Home
-$localhost = "192.168.1.11"; //Condo
+$localhost = "192.168.1.9"; //Condo
 //$localhost = "192.168.1.102"; //Router
 //open the connection
 $sqlConnect = mysqli_connect("localhost","root","");
@@ -17,8 +16,8 @@ if(!$selectDB) {
 }
 
 
-//Retrieve Doctor Information
-$query = "SELECT Username,Email,Rights,DateCreated FROM `users` WHERE Rights!='0'";
+//Retrieve List of Users
+$query = "SELECT * FROM `users` WHERE Rights!='0'";
 $result = mysqli_query($sqlConnect,$query);
 $data = mysqli_fetch_assoc($result);
 while( $row = mysqli_fetch_array($result)){
@@ -79,7 +78,7 @@ if(isset($_GET['Logout']))
 			<div class="col-sm-4" style="text-align:left">Homespital</div>
 			<div class="col-sm-4" style="text-align:center">Admin Dashboard</div>
             <div class="col-sm-4" style="text-align:right; ">
-				<a href="main_doctor.php?Logout=true" style="color:#FFFFFF; text-decoration: none;">Logout</a>	
+				<a href="admin_dashboard.php?Logout=true" style="color:#FFFFFF; text-decoration: none;">Logout</a>	
 			</div>
 		</div>
 	</div>
@@ -98,17 +97,17 @@ if(isset($_GET['Logout']))
 				<table class="table ">
 					<thead>
 					  <tr>
+                        <th>#</th>
                         <th>Date Created</th>
 						<th>Username</th>
 						<th>Email</th>
                         <th>Type</th>
                         <th></th>
-                        <th></th>
                         <th>
                             <?php
-                            echo '<form action="http://'.$localhost.'/homespital/register.php";>';
+                                echo '<form action="http://'.$localhost.'/homespital/register.php";>';
                                 echo	'<div class=" button-center">';
-                                echo		'<button type="submit" class="btn btn-login" value="Submit">+</button>';
+                                echo		'<button type="submit" class="btn" value="Submit">+</button>';
                                 echo	'</div>';
                                 echo '</form>';
                             ?>                           
@@ -119,6 +118,7 @@ if(isset($_GET['Logout']))
                         <?php for($i=0;$i<count($userData);$i++)
                             { ?>
                                 <tr>     
+                                    <td> <?php echo $i+1?></td>
                                     <td> <?php echo $userData[$i]['DateCreated'];  ?> </td>     
                                     <td> <?php echo $userData[$i]['Username'];  ?> </td>  
                                     <td> <?php echo $userData[$i]['Email'];  ?> </td> 
@@ -140,8 +140,26 @@ if(isset($_GET['Logout']))
                                               
                                         ?> 
                                     </td>  
-                                    <td> <?php echo "Edit";  ?> </td>  
-                                    <td> <?php echo "Delete";  ?> </td>  
+                                    <td>
+                                        <?php 
+                                            echo '<form action="http://'.$localhost.'/homespital/register.php";>';
+                                                echo	'<div class=" button-center">';
+                                                echo		'<button type="submit" class="btn btn-primary" value="Submit">Edit</button>';
+                                                echo	'</div>';
+                                                echo '</form>';
+                                        ?> 
+                                    </td>  
+                                    <td>
+                                        <?php 
+                                            echo '<form method="post" action="http://'.$localhost.'/homespital/delete_user.php" onsubmit="return confirm(\'Are you sure you want to delete '.$userData[$i]['Username'].'.\')";>';
+                                                echo	'<div class=" button-center">';
+                                                echo    '<input type="hidden" name="Username" value="'.$userData[$i]['Username'].'" />';
+                                                echo    '<input type="hidden" name="UserID" value="'.$userData[$i]['UserID'].'" />';
+                                                echo		'<button type="submit" class="btn btn-danger" value="Submit">Delete</button>';
+                                                echo	'</div>';
+                                                echo '</form>';
+                                        ?> 
+                                    </td>  
                                 </tr>  						 
 					    <?php }?>
 					</tbody>
