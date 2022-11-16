@@ -16,8 +16,6 @@ if(!$selectDB) {
  die("Database connection failed!" .mysqli_error());
 }
 
-//echo PHPinfo();
-//var_dump($_SESSION);
 $UserId = $_SESSION['userid'];
 $Rights = $_SESSION['rights'];
 
@@ -32,33 +30,61 @@ switch($Rights)
         break;
     default:
         $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";
+        
 }
 
 //Retrieve Information
 $result = mysqli_query($sqlConnect,$query);
 $data = mysqli_fetch_array($result);
 $keys = array_keys($data);
-$accountType = "";
+$accountType = $usernameQuery = $editUrl =  "";
+$idx = 1;
 if($Rights==1)
 {
     $accountType = "Patient";
-    $count =  (count($data)-8)/2;
+    $count =  (count($data)-8)/2;    
+    $usernameQuery = "SELECT * FROM users WHERE UserID='$UserId' ;";
+    $editUrl = "edit_patient.php";
+
+    $careNumberQuery = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '3'";
+    $careNumberResult = mysqli_query($sqlConnect,$careNumberQuery);
+    $careNumberData = mysqli_fetch_array($careNumberResult);
+
+    $caregiverID = $careNumberData["UserID"];
+
+    $careUsernameQuery = "SELECT * FROM users WHERE UserID = '$caregiverID'";
+    $careUsernameResult = mysqli_query($sqlConnect,$careUsernameQuery);
+    $careUsernameData = mysqli_fetch_array($careUsernameResult);
+
+    $idx = 3;
+  
 }
 else if($Rights==2)
 {
     $accountType = "Doctor";
     $count =  (count($data)-10)/2;
+    $usernameQuery = "SELECT * FROM users WHERE UserID='$UserId' ;";
+    $editUrl = "edit_doctor.php";
 }
 else if($Rights==3)
 {
     $accountType = "Caregiver";
     $count =  (count($data)-4)/2;
+    $userID = $data["UserID"];
+    $usernameQuery = "SELECT * FROM users WHERE UserID='$userID' ;";
+    $editUrl = "edit_caregiver.php";
 }
 else if($Rights==4)
 {
     $accountType = "Guest";
     $count =  (count($data)-4)/2;
+    $userID = $data["UserID"];
+    $usernameQuery = "SELECT * FROM users WHERE UserID='$userID' ;";
+    $editUrl = "edit_guest.php";
 }
+$result = mysqli_query($sqlConnect,$usernameQuery);
+$username = mysqli_fetch_array($result);
+
 ?>
 
 <!--      ------------------------------------------------------------------------------ -->
@@ -97,32 +123,71 @@ else if($Rights==4)
 		</div>
 	</div>
 
-    <div class="notify-box" style="background-color:white; border-radius: 10px;"> 
+    <div class="body row">
+		<!-- left panel -->
+		<div class="left-body col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-radius: 5px;"> 
         <div style="background-color:#006b4a; border-radius: 5px; font-size: 24px; color:white">User Information</div>
-        <div class= "body row">
+        <div class="body row-12 my-custom-schedule left-body" style = "Height: 5px;"></div>  
+        <div class= "row-12  my-custom-schedule col-lg-12 left-body" style = "Height: 750px; border-radius: 10px;" >
             <!-- class="col-xs-12 col-sm-12 col-md-12 col-lg-12" -->
-            <?php
-                if($Rights == 1 || $Rights == 2) echo '<img src="data:image/png;base64, '. base64_encode($data["Image"]).' " style="height: 300px; width:300px; display: block; margin-left: auto; margin-right: auto;" />';
-            ?>            
+            <div class= "row">
+                <div class="col-11"style="border-radius: 5px;">
+                <?php
+                    if($Rights == 1 || $Rights == 2) echo '<img src="data:image/png;base64, '. base64_encode($data["Image"]).' " style="height: 200px; width:200px; display: block; margin-left: auto; margin-right: auto; " />';
+                ?>   
+                </div> 
+                <div class="col-1 ">
+
+                    <a href = <?php echo $editUrl; ?>><img class = "float-right" src="assets/edit-pencil.png" style="height: 30px; width:30px; display: block; margin-left: auto; margin-right: auto; " />
+                </div>
+            </div>
+            <div class="body row"></div>     
+               
             <div class="table-responsive table-condensed col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:left;"> 
                 <table class = "table" style="text-align:left;">
                             <tr>
                                 <td>Account Type </td>
                                 <td><?php echo $accountType; ?></td>
                             </tr>
-                    <?php
-                        for($i=0;$i<$count;$i++)
-                        {?>
                             <tr>
-                                <td><?php echo $keys[(2*$i)+1]; ?> </td>
-                                <td><?php echo $data[$i]; ?></td>
-                            </tr><?php
-                        }
-                    ?>
+                                <td>Username </td>
+                                <td><?php echo $username["Username"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Email </td>
+                                <td><?php echo $username["Email"]; ?></td>
+                            </tr>
+                            <tr>
+                                <td>User ID </td>
+                                <td><?php echo $data["UserID"] ?></td>
+                            </tr>
+                            <?php
+                                for($i=$idx;$i<$count;$i++)
+                                {?>
+                                    <tr>
+                                        <td><?php echo $keys[(2*$i)+1]; ?> </td>
+                                        <td><?php echo $data[$i]; ?></td>
+                                    </tr><?php
+                                }
+                            ?>
+                            <?php
+                                if($Rights == 1)
+                                {
+                                    echo   '<tr>
+                                            <td>Caregiver </td>
+                                            <td>'. $careUsernameData["Username"]. ' - ' . $careNumberData["ContactNumber"] .'</td>
+                                            </tr>';
+                                } 
+                            ?>
+                            
                 </table>
             </div>
         </div>
     </div>
+    </div>
+		
+		
+        </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

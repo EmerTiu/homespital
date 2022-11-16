@@ -164,10 +164,10 @@ if(isset($_POST['Remove']) && isset($_POST['submit']))
 			</div>
             
             <div class="col-sm-4 row" style="text-align:right; ">
-				<div class="col-8" style="text-align:right; ">
+				<div class="col-9" style="text-align:right; ">
                     <a href="view_user.php"> <img class="center rounded float-right"  src="assets/person-circle.png"  style="height:50px; width:50px"> </img> </a>
 				</div>
-				<div class="col-sm-4" style="text-align:right; ">
+				<div class="col-sm-3" style="text-align:right; ">
 				    <a href="main_doctor.php?Logout=true" style="color:#FFFFFF; text-decoration: none;">Logout</a>	
 			    </div>
 					

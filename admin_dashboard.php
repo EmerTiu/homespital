@@ -2,7 +2,7 @@
 <?php
 session_start();
 //$localhost = "192.168.254.134"; //Home
-$localhost = "192.168.1.9"; //Condo
+$localhost = "192.168.1.11"; //Condo
 //$localhost = "192.168.1.102"; //Router
 //open the connection
 $sqlConnect = mysqli_connect("localhost","root","");
