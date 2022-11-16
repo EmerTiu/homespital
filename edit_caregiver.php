@@ -2,7 +2,7 @@
         session_start();
         //$localhost = "192.168.254.102"; //Home
         //$localhost = "192.168.1.13"; //Condo
-        $localhost = "192.168.1.11"; //Condo
+        $localhost = "192.168.1.9"; //Condo
 		//$localhost = "192.168.1.102"; //Router
 
 
@@ -15,14 +15,29 @@
         if(!$selectDB) {
         die("Database connection failed!" .mysqli_error());
         }
-
-        $UserId = $_SESSION['userid'];
-        $Rights = $_SESSION['rights'];
+        if(isset($_POST['admin']))
+        {
+            $redirect = "/homespital/admin_dashboard.php";
+            $UserId = $_POST['editUserID'];
+            $Rights = $_POST['editUserRights'];
+            $query = "SELECT * FROM caregiver_and_guest_users WHERE UserID = '$UserId' AND Rights = '$Rights' ;";
+        }
+        else{            
+            $redirect = "/homespital/view_user.php";
+            $UserId = $_SESSION['userid'];
+            $Rights = $_SESSION['rights'];
+            $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";
+        }
+        echo $UserId."\n";
+        echo $Rights;
         
         //var_dump($_SESSION);
-        $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";;
+
+        echo $redirect;
+        //echo $query;
         $result = mysqli_query($sqlConnect,$query);
         $data = mysqli_fetch_array($result);
+        //var_dump($data);
 
         $caregiverID = $data["UserID"];
 
@@ -34,14 +49,14 @@
         $contactNumberInput = '<input type="text" class="form-control" id="personalNumber" name="personalNumber" value = "'.htmlspecialchars($data["ContactNumber"]).'" >';
         $emailInput = '<input type="text" class="form-control" id="email" name="email" value = "'.htmlspecialchars($email["Email"]).'" >';      
 
-		if ($_SERVER["REQUEST_METHOD"] == "POST") 
+		if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['admin'])) 
 		{
             UpdateUser($sqlConnect, $UserId, $caregiverID);
             mysqli_close($sqlConnect); 
             echo 
             '<script>
                 alert("Successfully Updated Caregiver Account!");
-                location="http://'.$localhost.'/homespital/view_user.php";
+                location="http://'.$localhost.$redirect.'";
             </script>';  
         }
 

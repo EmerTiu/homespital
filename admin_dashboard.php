@@ -2,7 +2,7 @@
 <?php
 session_start();
 //$localhost = "192.168.254.134"; //Home
-$localhost = "192.168.1.11"; //Condo
+$localhost = "192.168.1.9"; //Condo
 //$localhost = "192.168.1.102"; //Router
 //open the connection
 $sqlConnect = mysqli_connect("localhost","root","");
@@ -142,22 +142,37 @@ if(isset($_GET['Logout']))
                                     </td>  
                                     <td>
                                         <?php 
-                                            echo '<form action="http://'.$localhost.'/homespital/register.php";>';
-                                                echo	'<div class=" button-center">';
-                                                echo		'<button type="submit" class="btn btn-primary" value="Submit">Edit</button>';
-                                                echo	'</div>';
-                                                echo '</form>';
+                                            
+                                            switch($userData[$i]['Rights']){
+                                                case 1:
+                                                    $type = "patient";
+                                                    break;
+                                                case 2:
+                                                    $type = "doctor";
+                                                    break;
+                                                default:
+                                                    $type = "caregiver";
+                                                    break;
+                                            }
+                                            echo '<form method="post" action="http://'.$localhost.'/homespital/edit_'.$type.'.php";>';
+                                            echo	'<div class=" button-center">';
+                                            echo    '<input type="hidden" name="admin" value="true" />';
+                                            echo    '<input type="hidden" name="editUserRights" value="'.$userData[$i]['Rights'].'" />';
+                                            echo    '<input type="hidden" name="editUserID" value="'.$userData[$i]['UserID'].'" />';
+                                            echo		'<button type="submit" class="btn btn-primary" value="Submit">Edit</button>';
+                                            echo	'</div>';
+                                            echo '</form>';
                                         ?> 
                                     </td>  
                                     <td>
                                         <?php 
                                             echo '<form method="post" action="http://'.$localhost.'/homespital/delete_user.php" onsubmit="return confirm(\'Are you sure you want to delete '.$userData[$i]['Username'].'.\')";>';
-                                                echo	'<div class=" button-center">';
-                                                echo    '<input type="hidden" name="Username" value="'.$userData[$i]['Username'].'" />';
-                                                echo    '<input type="hidden" name="UserID" value="'.$userData[$i]['UserID'].'" />';
-                                                echo		'<button type="submit" class="btn btn-danger" value="Submit">Delete</button>';
-                                                echo	'</div>';
-                                                echo '</form>';
+                                            echo	'<div class=" button-center">';
+                                            echo    '<input type="hidden" name="Username" value="'.$userData[$i]['Username'].'" />';
+                                            echo    '<input type="hidden" name="UserID" value="'.$userData[$i]['UserID'].'" />';
+                                            echo		'<button type="submit" class="btn btn-danger" value="Submit">Delete</button>';
+                                            echo	'</div>';
+                                            echo '</form>';
                                         ?> 
                                     </td>  
                                 </tr>  						 

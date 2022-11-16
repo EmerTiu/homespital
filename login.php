@@ -21,7 +21,7 @@ session_start();
   <body>
   
 	<?php
-	    $localhost = "192.168.1.11"; //Condo
+	    $localhost = "192.168.1.9"; //Condo
 		//$localhost = "192.168.1.102"; //Router
 	    $showRegister = 1;
 
@@ -99,7 +99,7 @@ session_start();
 			$_SESSION["rights"] = $data['rights'];
 			header("Location: http://".$localhost."/homespital/admin_dashboard.php?session_id=".session_id());
 			exit();;
-			var_dump($_SESSION);
+				var_dump($_SESSION);
 		  }
 		}
 	    }
