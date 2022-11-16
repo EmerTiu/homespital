@@ -2,7 +2,7 @@
         session_start();
         //$localhost = "192.168.254.102"; //Home
         //$localhost = "192.168.1.13"; //Condo
-        $localhost = "192.168.1.9"; //Condo
+        $localhost = "192.168.1.11"; //Condo
 		//$localhost = "192.168.1.102"; //Router
 
 
@@ -15,26 +15,19 @@
         if(!$selectDB) {
         die("Database connection failed!" .mysqli_error());
         }
-        if(isset($_POST['admin']))
+
+        $UserId = $_SESSION['userid'];
+        $Rights = $_SESSION['rights'];
+        if($_SESSION["adminPermission"] == 1)
         {
             $redirect = "/homespital/admin_dashboard.php";
-            $UserId = $_POST['editUserID'];
-            $Rights = $_POST['editUserRights'];
             $query = "SELECT * FROM caregiver_and_guest_users WHERE UserID = '$UserId' AND Rights = '$Rights' ;";
         }
         else{            
             $redirect = "/homespital/view_user.php";
-            $UserId = $_SESSION['userid'];
-            $Rights = $_SESSION['rights'];
             $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";
         }
-        echo $UserId."\n";
-        echo $Rights;
         
-        //var_dump($_SESSION);
-
-        echo $redirect;
-        //echo $query;
         $result = mysqli_query($sqlConnect,$query);
         $data = mysqli_fetch_array($result);
         //var_dump($data);
@@ -47,9 +40,9 @@
         //var_dump($data);
 
         $contactNumberInput = '<input type="text" class="form-control" id="personalNumber" name="personalNumber" value = "'.htmlspecialchars($data["ContactNumber"]).'" >';
-        $emailInput = '<input type="text" class="form-control" id="email" name="email" value = "'.htmlspecialchars($email["Email"]).'" >';      
+        $emailInput = '<input type="email" class="form-control" id="email" name="email" value = "'.htmlspecialchars($email["Email"]).'" >';      
 
-		if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['admin'])) 
+		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
             UpdateUser($sqlConnect, $UserId, $caregiverID);
             mysqli_close($sqlConnect); 
@@ -65,7 +58,7 @@
             $image = $imageName = $imageType = $query = "";
             $imageArray = array();
             
-            $contactnumber = $_POST['countryCode'] . $_POST['personalNumber'];
+            $contactnumber = $_POST['personalNumber'];
             $email = $_POST['email'];
            
             $query = "UPDATE caregiver_and_guest_users SET ContactNumber = '$contactnumber' WHERE UserID = '$caregiverID'";
@@ -120,6 +113,10 @@
                 <div class="form-group">
                     <label for="personalNumber">Contact Number </label>
                     <?php echo $contactNumberInput; ?>
+                </div>
+                <div class="form-group">
+                    <label for="personalNumber">Email Address </label>
+                    <?php echo $emailInput; ?>
                 </div>
                 <div class=" button-center">
                     <button type="submit" class="btn btn-login" value="Submit">Login</button>

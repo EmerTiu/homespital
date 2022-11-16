@@ -21,7 +21,7 @@ session_start();
   <body>
   
 	<?php
-	    $localhost = "192.168.1.9"; //Condo
+	    $localhost = "192.168.1.11"; //Condo
 		//$localhost = "192.168.1.102"; //Router
 	    $showRegister = 1;
 

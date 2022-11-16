@@ -18,6 +18,7 @@
 
         $UserId = $_SESSION['userid'];
         $Rights = $_SESSION['rights'];
+        $admin = $_SESSION["adminPermission"];
         
         //var_dump($_SESSION);
         $query = "SELECT * FROM doctor_users WHERE UserID='$UserId' ;";
@@ -32,6 +33,16 @@
         $contactNumberInput = '<input type="text" class="form-control" id="personalNumber" name="personalNumber" value = "'.htmlspecialchars($data["PhoneNumber"]).'" >';
         $emailInput = '<input type="text" class="form-control" id="email" name="email" value = "'.htmlspecialchars($email["Email"]).'" >';       
 
+        switch($admin)
+        {
+            case 1:
+                $redirectUrl = "/homespital/admin_dashboard.php";
+                break;
+            default:
+                $redirectUrl = "/homespital/view_user.php";
+        }
+        
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
             UpdateUser($sqlConnect, $UserId);
@@ -39,7 +50,7 @@
             echo 
             '<script>
                 alert("Successfully Updated Doctor Account!");
-                location="http://'.$localhost.'/homespital/view_user.php";
+                location="http://'.$localhost.$redirectUrl.'";
             </script>';  
         }
 

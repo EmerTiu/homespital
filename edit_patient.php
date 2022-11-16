@@ -18,6 +18,7 @@
 
         $UserId = $_SESSION['userid'];
         $Rights = $_SESSION['rights'];
+        $admin = $_SESSION["adminPermission"];
         
         //var_dump($_SESSION);
         $query = "SELECT * FROM patient_users WHERE UserID='$UserId' ;";
@@ -39,6 +40,16 @@
         $contactNameInput3 = '<input type="text" class="form-control" id="contactPerson3" name="contactPerson3" value = "'.htmlspecialchars($data["ContactName3"]).'" >'; 
         $contactNumberInput3 = '<input type="text" class="form-control" id="contactNumber3" name="contactNumber3" value = "'.htmlspecialchars($data["ContactNumber3"]).'" >';        
 
+		switch($admin)
+        {
+            case 1:
+                $redirectUrl = "/homespital/admin_dashboard.php";
+                break;
+            default:
+                $redirectUrl = "/homespital/view_user.php";
+        }
+        
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{
             UpdateUser($sqlConnect, $UserId);
@@ -46,7 +57,7 @@
             echo 
             '<script>
                 alert("Successfully Updated Patient Account!");
-                location="http://'.$localhost.'/homespital/view_user.php";
+                location="http://'.$localhost.$redirectUrl.'";
             </script>';  
         }
 
@@ -55,7 +66,7 @@
             $image = $imageName = $imageType = $query = "";
             $imageArray = array();
             
-            $contactnumber = $_POST['countryCode'] . $_POST['personalNumber'];
+            $contactnumber = $_POST['personalNumber'];
             $email = $_POST['email'];
             $address = $_POST['address'];
             $contactNumber1 = $_POST['contactNumber1'];
@@ -68,14 +79,14 @@
             
             if($_FILES["image"]['size']==0)
             {                
-                $query = "UPDATE patient_users SET ContactNumber = '$contactnumber', Address = '$address', ContactNumber1 = '$contactNumber1', ContactName1 = '$contactName1', ContactNumber2 = '$contactNumber2', ContactName2 = '$contactName2', ContactNumber3 = '$contactNumber3', ContactName3 = '$contactName3' WHERE UserID = '$UserId'";
+                $query = "UPDATE patient_users SET ContactNumber = '$contactnumber', Address = '$address', ContactNumber1 = '$contactNumber1', ContactName1 = '$contactName1', ContactNumber2 = '$contactNumber2', ContactName2 = '$contactName2', ContactNumber3 = '$contactNumber3', ContactName3 = '$contactName3' WHERE UserID = '$userID'";
             }
             else
             {
                 $image = addslashes(file_get_contents($_FILES['image']['tmp_name']));
                 $imageName = $_FILES['image']['name'];
                 $imageType = $_FILES['image']['type'];
-                $query = "UPDATE patient_users SET ContactNumber = '$contactnumber', Address = '$address', ContactNumber1 = '$contactNumber1', ContactName1 = '$contactName1', ContactNumber2 = '$contactNumber2', ContactName2 = '$contactName2', ContactNumber3 = '$contactNumber3', ContactName3 = '$contactName3', ImageName = '$imageName', ImageType = '$imageType', Image = '$image' WHERE UserID = '$UserId'";
+                $query = "UPDATE patient_users SET ContactNumber = '$contactnumber', Address = '$address', ContactNumber1 = '$contactNumber1', ContactName1 = '$contactName1', ContactNumber2 = '$contactNumber2', ContactName2 = '$contactName2', ContactNumber3 = '$contactNumber3', ContactName3 = '$contactName3', ImageName = '$imageName', ImageType = '$imageType', Image = '$image' WHERE UserID = '$userID'";
             }
 
             $result = mysqli_query($sqlConnect,$query);
@@ -83,7 +94,7 @@
                 die("Failed to connect: " . mysqli.error());
             }
 
-            $emailQuery = "UPDATE users SET Email = '$email' WHERE UserID = '$UserId'";
+            $emailQuery = "UPDATE users SET Email = '$email' WHERE UserID = '$userID'";
             $result = mysqli_query($sqlConnect,$emailQuery);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());

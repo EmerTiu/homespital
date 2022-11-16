@@ -39,6 +39,8 @@ $data = mysqli_fetch_array($result);
 $keys = array_keys($data);
 $accountType = $usernameQuery = $editUrl =  "";
 $idx = 1;
+
+$_SESSION["adminPermission"] = 0;
 if($Rights==1)
 {
     $accountType = "Patient";
