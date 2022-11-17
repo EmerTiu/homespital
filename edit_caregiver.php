@@ -119,7 +119,7 @@
                     <?php echo $emailInput; ?>
                 </div>
                 <div class=" button-center">
-                    <button type="submit" class="btn btn-login" value="Submit">Login</button>
+                    <button type="submit" class="btn btn-login" value="Submit">Update</button>
                 </div>
                 </div>
             </form>

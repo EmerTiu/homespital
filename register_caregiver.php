@@ -61,7 +61,7 @@
                 echo 
                     '<script>
                         alert("Passwords does not match ");
-                        location="http://'.$localhost.'/homespital/register_guest.html";
+                        location="http://'.$localhost.'/homespital/register_caregiver.html";
                     </script>';
                 return false;
             }
@@ -77,7 +77,7 @@
                 echo 
                     '<script>
                         alert("Username already exixts");
-                        location="http://'.$localhost.'/homespital/register_guest.html";
+                        location="http://'.$localhost.'/homespital/register_caregiver.html";
                     </script>';
                     return false;
             }
@@ -86,7 +86,7 @@
             {
                 echo '<script type="text/javascript">
                     alert("Patient already has a Caregiver Account");
-                    location="http://'.$localhost.'/homespital/register_guest.html";
+                    location="http://'.$localhost.'/homespital/register_caregiver.html";
                     </script>'; 
                     return false; 
             }

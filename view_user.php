@@ -19,6 +19,9 @@ if(!$selectDB) {
 $UserId = $_SESSION['userid'];
 $Rights = $_SESSION['rights'];
 
+if($Rights == 2) $UserId = $_SESSION['doctorid'];
+
+
 $query = $count = "";
 switch($Rights)
 {
@@ -52,11 +55,15 @@ if($Rights==1)
     $careNumberResult = mysqli_query($sqlConnect,$careNumberQuery);
     $careNumberData = mysqli_fetch_array($careNumberResult);
 
-    $caregiverID = $careNumberData["UserID"];
+    if(!empty($careNumberData))
+    {
+        $caregiverID = $careNumberData["UserID"];
 
-    $careUsernameQuery = "SELECT * FROM users WHERE UserID = '$caregiverID'";
-    $careUsernameResult = mysqli_query($sqlConnect,$careUsernameQuery);
-    $careUsernameData = mysqli_fetch_array($careUsernameResult);
+        $careUsernameQuery = "SELECT * FROM users WHERE UserID = '$caregiverID'";
+        $careUsernameResult = mysqli_query($sqlConnect,$careUsernameQuery);
+        $careUsernameData = mysqli_fetch_array($careUsernameResult);
+    }    
+    
 
     $idx = 3;
   
@@ -140,7 +147,7 @@ $username = mysqli_fetch_array($result);
                 </div> 
                 <div class="col-1 ">
 
-                    <a href = <?php echo $editUrl; ?>><img class = "float-right" src="assets/edit-pencil.png" style="height: 30px; width:30px; display: block; margin-left: auto; margin-right: auto; " />
+                    <a href = <?php echo $editUrl; ?>><img class = "float-right" src="assets/edit-pencil.png" style="height: 30px; width:30px; display: block; margin-left: auto; margin-right: auto; " /></a>
                 </div>
             </div>
             <div class="body row"></div>     
@@ -173,7 +180,7 @@ $username = mysqli_fetch_array($result);
                                 }
                             ?>
                             <?php
-                                if($Rights == 1)
+                                if($Rights == 1 && !empty($careNumberData))
                                 {
                                     echo   '<tr>
                                             <td>Caregiver </td>

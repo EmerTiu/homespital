@@ -21,6 +21,7 @@ if(!$selectDB) {
 $doctorid = $_SESSION['doctorid'];
 $clientList = array();
 
+$_SESSION["userid"] = $doctorid;
 
 //Retrieve Doctor Information
 $query = "select * FROM doctor_users WHERE userid='$doctorid' ;";

@@ -139,7 +139,7 @@ session_start();
 		
 		if(isset($_GET['doctorLogout']))
 		{
-			unset($_SESSION['userid']);
+			//unset($_SESSION['userid']);
 			header("Location: http://".$localhost."/homespital/main_doctor.php");
 			exit();
 		}
