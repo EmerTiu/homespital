@@ -1,6 +1,8 @@
 <?php
   session_start();
-  $localhost = "192.168.1.11";
+  $localhost = "192.168.254.102"; //Home
+//$localhost = "192.168.1.11"; //Condo
+//$localhost = "192.168.1.102"; //Router
   $pass = $user = $confirm = "";
   $registerErr = $passErr = $loginErr = "";
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -90,7 +92,7 @@
 <body>
     <div class="card-container">
       <div class="card login-card">
-      <a class="card-title login-card" href="http://192.168.1.11/homespital/login.php" style="text-decoration: none;" >Homespital</a>
+      <a class="card-title login-card" href="http://192.168.254.102/homespital/login.php" style="text-decoration: none;" >Homespital</a>
         <div class="card-body">
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="form-group">
@@ -99,11 +101,11 @@
             </div>
             <div class="form-group">
               <label for="exampleInputUsername1">Password</label>
-              <input type="text" class="form-control" id="InputPassword" placeholder="Enter Password" name="password">
+              <input type="password" class="form-control" id="InputPassword" placeholder="Enter Password" name="password">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Confirm Password </label>
-              <input type="text" class="form-control" id="InputConfirm" placeholder="Confirm Password" name="confirm">
+              <input type="password" class="form-control" id="InputConfirm" placeholder="Confirm Password" name="confirm">
             </div>
             <div class=" button-center">
                   <button type="submit" class="btn btn-login" value="Submit">Register</button>

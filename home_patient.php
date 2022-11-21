@@ -23,8 +23,8 @@ session_start();
 	
 	<!-- PHP script -->
 	<?php
-		//$localhost = "192.168.254.134"; //Home
-        $localhost = "192.168.1.11"; //Condo
+		$localhost = "192.168.254.102"; //Home
+		//$localhost = "192.168.1.11"; //Condo
 		//$localhost = "192.168.1.102"; //Router
 		//Connecting to mysql 
 		$sqlConnect = mysqli_connect("localhost", "root","");
@@ -139,7 +139,7 @@ session_start();
 		
 		if(isset($_GET['doctorLogout']))
 		{
-			//unset($_SESSION['userid']);
+			unset($_SESSION['userid']);
 			header("Location: http://".$localhost."/homespital/main_doctor.php");
 			exit();
 		}
@@ -554,16 +554,6 @@ session_start();
 									<tbody>
 										<tr>
 											<td><?php echo $address; ?></td>
-										</tr>
-									</tbody>
-									<thead>
-										<tr>
-											<th>Patient ID</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><?php echo $UserId; ?></td>
 										</tr>
 									</tbody>
 								</table>

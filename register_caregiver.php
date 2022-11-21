@@ -1,8 +1,7 @@
 <?php
-        //$localhost = "192.168.254.102"; //Home
-        //$localhost = "192.168.1.13"; //Condo
-        $localhost = "192.168.1.11"; //Condo
-		//$localhost = "192.168.1.102"; //Router
+        $localhost = "192.168.254.102"; //Home
+        //$localhost = "192.168.1.11"; //Condo
+        //$localhost = "192.168.1.102"; //Router
 
 		if ($_SERVER["REQUEST_METHOD"] == "POST") 
 		{

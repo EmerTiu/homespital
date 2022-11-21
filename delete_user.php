@@ -1,5 +1,7 @@
 <?php
-    $localhost = "192.168.1.9";
+    $localhost = "192.168.254.102"; //Home
+    //$localhost = "192.168.1.11"; //Condo
+    //$localhost = "192.168.1.102"; //Router
     //echo $_POST['Username'];
 
     $sqlConnect = mysqli_connect("localhost","root","");

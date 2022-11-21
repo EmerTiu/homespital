@@ -1,9 +1,8 @@
 <?php
         session_start();
-        //$localhost = "192.168.254.102"; //Home
-        //$localhost = "192.168.1.13"; //Condo
-        $localhost = "192.168.1.11"; //Condo
-		//$localhost = "192.168.1.102"; //Router
+        $localhost = "192.168.254.102"; //Home
+//$localhost = "192.168.1.11"; //Condo
+//$localhost = "192.168.1.102"; //Router
 
 
         $sqlConnect = mysqli_connect("localhost","root","");
@@ -18,12 +17,17 @@
 
         $UserId = $_SESSION['userid'];
         $Rights = $_SESSION['rights'];
-        
-        //var_dump($_SESSION);
-        $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";;
+        if($_SESSION["adminPermission"] == 1)
+        {
+            $redirect = "/homespital/admin_dashboard.php";
+            $query = "SELECT * FROM caregiver_and_guest_users WHERE UserID = '$UserId' AND Rights = '$Rights' ;";
+        }
+        else{            
+            $redirect = "/homespital/view_user.php";
+            $query = "SELECT * FROM caregiver_and_guest_users WHERE ConnectedID = '$UserId' AND Rights = '$Rights' ;";
+        }
         $result = mysqli_query($sqlConnect,$query);
         $data = mysqli_fetch_array($result);
-
         $caregiverID = $data["UserID"];
 
         $emailQuery = "SELECT Email FROM users WHERE UserID='$caregiverID' ;";
@@ -41,7 +45,7 @@
             echo 
             '<script>
                 alert("Successfully Updated Guest Account!");
-                location="http://'.$localhost.'/homespital/view_user.php";
+                location="http://'.$localhost.$redirect.'";
             </script>';  
         }
 
@@ -56,18 +60,6 @@
             $query = "UPDATE caregiver_and_guest_users SET ContactNumber = '$contactnumber' WHERE UserID = '$caregiverID'";
 
             $result = mysqli_query($sqlConnect,$query);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-
-            $emailQuery = "UPDATE users SET Email = '$email' WHERE UserID = '$caregiverID'";
-            $result = mysqli_query($sqlConnect,$emailQuery);
-            if(!$result){
-                die("Failed to connect: " . mysqli.error());
-            }
-
-            $sql1 = "UPDATE `Web-Sync` SET LastSync = CURRENT_TIMESTAMP WHERE Name='users';";
-	        $result = mysqli_query($sqlConnect,$sql1);
             if(!$result){
                 die("Failed to connect: " . mysqli.error());
             }

@@ -1,8 +1,8 @@
 
 <?php
 session_start();
-//$localhost = "192.168.254.134"; //Home
-$localhost = "192.168.1.11"; //Condo
+$localhost = "192.168.254.102"; //Home
+//$localhost = "192.168.1.11"; //Condo
 //$localhost = "192.168.1.102"; //Router
 //open the connection
 $sqlConnect = mysqli_connect("localhost","root","");
@@ -54,9 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         case 2:
             $type = "doctor";
             break;
-        default:
+        case 3:
             $type = "caregiver";
             break;
+        default:
+            $type = "guest";
     }
     $_SESSION["userid"] = $_POST['editUserID'];
     $_SESSION["rights"] = $_POST['editUserRights'];

@@ -8,10 +8,9 @@
     $username = "root";
     $password = "";
 	$dbname = "homespital";	
-	//$localhost = "192.168.1.13";
-	//$localhost = "192.168.254.134";
-	$localhost = "192.168.1.11"; //Condo
-		//$localhost = "192.168.1.102"; //Router
+	$localhost = "192.168.254.102"; //Home
+//$localhost = "192.168.1.11"; //Condo
+//$localhost = "192.168.1.102"; //Router
 	
 	var_dump($_POST['Time']);
 

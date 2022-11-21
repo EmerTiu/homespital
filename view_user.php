@@ -2,8 +2,8 @@
 <?php
 
 session_start();
-//$localhost = "192.168.254.134"; //Home
-$localhost = "192.168.1.11"; //Condo
+$localhost = "192.168.254.102"; //Home
+//$localhost = "192.168.1.11"; //Condo
 //$localhost = "192.168.1.102"; //Router
 //open the connection
 $sqlConnect = mysqli_connect("localhost","root","");
@@ -162,10 +162,15 @@ $username = mysqli_fetch_array($result);
                                 <td>Username </td>
                                 <td><?php echo $username["Username"]; ?></td>
                             </tr>
-                            <tr>
-                                <td>Email </td>
-                                <td><?php echo $username["Email"]; ?></td>
-                            </tr>
+                            <?php
+                                if($Rights != 4)
+                                {
+                                    echo '<tr>
+                                        <td>Email </td>
+                                        <td>'. $username["Email"] .'</td>
+                                        </tr>';
+                                }
+                            ?>
                             <tr>
                                 <td>User ID </td>
                                 <td><?php echo $data["UserID"] ?></td>
